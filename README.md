@@ -4,6 +4,10 @@ Semestrálna práca z predmetu *Pokročilé databázové systémy*: databáza au
 SQL / PL/SQL logika, objektové typy a kolekcie (VARRAY, NESTED TABLE) v modeli, XML a JSON a desktopová aplikácia,
 ktorá to všetko sprístupňuje.
 
+> **Podrobná inštalačná a technická príručka:** [docs/Autoservis_prirucka.pdf](docs/Autoservis_prirucka.pdf)
+> (Word: [docs/Autoservis_prirucka.docx](docs/Autoservis_prirucka.docx)) – inštalácia a nastavenie databázy aj aplikácie,
+> architektúra, dátový model, objekty a kolekcie, PL/SQL, reporty, XML / JSON a priebeh typických scenárov.
+
 ## Opis projektu a dátového modelu
 
 *(pôvodný popis člena 1 – A, doplnený o kolekcie – D)*
@@ -251,6 +255,8 @@ Autoservis_ERD_v2.png             aktuálny ER diagram (12 tabuliek, kolekcie, o
 15_exporty_xml_json.sql           exporty XML / JSON, čítanie JSON (JSON_TABLE, JSON_VALUE)           (D)
 16_kolekcie_reporty.sql           reporty 13, 14 nad VARRAY a NESTED TABLE, DML nad kolekciou         (D)
 tools/ErdGen.java                 generátor ER diagramu z dátového slovníka                           (D)
+docs/Autoservis_prirucka.docx     inštalačná a technická príručka (Word)                              (D)
+docs/Autoservis_prirucka.pdf      tá istá príručka v PDF                                              (D)
 app/                              desktopová aplikácia (Java Swing + Maven)                           (M, D)
   pom.xml                         Maven (Java 17, ojdbc11, balenie do jedného JAR-u)                  (M, D)
   spusti.bat, spusti.sh           spustenie aplikácie                                                 (M, D)
