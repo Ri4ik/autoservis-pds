@@ -1,0 +1,17 @@
+# build
+target/
+*.class
+*.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# lokalna konfiguracia (URL a meno schemy) - vzor je app/db.properties.example
+db.properties
+
+# vystupy exportov z aplikacie
+*.xml.out
+export.xml
+export.json
