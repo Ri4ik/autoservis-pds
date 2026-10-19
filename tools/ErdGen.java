@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.List;
 
-/** Vygeneruje ER diagram (relačný model) z dátového slovníka Oracle. Usage: ErdGen <out.png>; env DB_URL, DB_USER, DB_PASS */
+/** Vygeneruje ER diagram (relačný model) z dátového slovníka Oracle. Usage: ErdGen <out.png> (napr. Autoservis_ERD_v2.png); env DB_URL, DB_USER, DB_PASS */
 public class ErdGen {
 
     record Col(String name, String type, boolean notNull, boolean pk, boolean fk, boolean uq, boolean udt) {}

@@ -11,7 +11,7 @@ ktorá to všetko sprístupňuje.
 Informačný systém na správu autoservisu: evidencia zákazníkov a ich vozidiel, servisné zákazky, vykonané servisné úkony
 a použité náhradné diely, faktúry a platby a prílohy (fotografie vozidiel, servisné dokumenty) uložené ako BLOB.
 
-![ER diagram](Autoservis_ERD.png)
+![ER diagram](Autoservis_ERD_v2.png)
 
 **Dátový model** má 11 základných tabuliek (`ZAKAZNIK`, `VOZIDLO`, `ZAMESTNANEC`, `SERVISNA_ZAKAZKA`, `SERVISNY_UKON`,
 `VYKONANY_UKON`, `NAHRADNY_DIEL`, `POUZITY_DIEL`, `FAKTURA`, `PLATBA`, `PRILOHA`) a tabuľku `SERVISNA_POLOZKA_ZAKAZKY`
@@ -60,7 +60,8 @@ neskôr množinu min. 100 000 záznamov na analýzu indexov.
 
 | Súbor | Obsah | Urobil |
 |---|---|---|
-| `Autoservis_ERD.png` | ER diagram – pôvodný (A), aktualizovaný o `SERVISNA_POLOZKA_ZAKAZKY` a kolekcie, vygenerovaný z dátového slovníka (`tools/ErdGen.java`) (D) | (A, D) |
+| `Autoservis_ERD.png` | pôvodný ER diagram (11 tabuliek) | (A) |
+| `Autoservis_ERD_v2.png` | aktualizovaný ER diagram – 12 tabuliek vrátane `SERVISNA_POLOZKA_ZAKAZKY`, kolekcie a objektové typy; vygenerovaný z dátového slovníka (`tools/ErdGen.java`) | (D) |
 | `01_schema.sql` | 11 tabuliek, PK, 11 FK, `NOT NULL` / `UNIQUE` / `CHECK`, identity stĺpce, indexy na FK | (A) |
 | `01_schema.sql` – kolekcie v modeli | typy `T_STAV_KM`, `T_HISTORIA_KM` (VARRAY(30)), `T_BOD_KONTROLY`, `T_KONTROLNY_ZOZNAM` (NESTED TABLE); stĺpce `VOZIDLO.historia_km` a `SERVISNA_ZAKAZKA.kontrolny_zoznam` (storage `SERVISNA_ZAKAZKA_KONTROLA_NT` s CHECK na stav) | (D) |
 | `02_demo_data.sql` | 45 testovacích záznamov | (A) |
@@ -119,7 +120,7 @@ Požiadavka cvičiaceho: *dátový model (normalizovaný, min. 8 tabuliek, na ch
 
 | Člen | Požiadavka | Stav | Urobil |
 |---|---|---|---|
-| 1 | ER diagram | ✅ `Autoservis_ERD.png` | (A, D) |
+| 1 | ER diagram | ✅ `Autoservis_ERD.png` (pôvodný), `Autoservis_ERD_v2.png` (aktuálny) | (A, D) |
 | 1 | Tabuľky, PK/FK, `NOT NULL` / `UNIQUE` / `CHECK`, identity | ✅ `01_schema.sql` – 11 tabuliek (min. 8) | (A) |
 | 1 | Zmysluplné testovacie údaje | ✅ 45 záznamov (`02_demo_data.sql`) | (A) |
 | 1 | Automatické generovanie údajov | ✅ `14_generator_dat.sql` (trvalé vygenerovanie v spoločnej schéme – rozhodnutie tímu) | (D) |
@@ -132,7 +133,7 @@ Požiadavka cvičiaceho: *dátový model (normalizovaný, min. 8 tabuliek, na ch
 | 3 | Objektový atribút tabuľky + testy cez SQL + triedenie | ✅ `08_object_servisna_polozka.sql` + záložka *Objektové typy* | (D) |
 | 3 | XML report servisnej zákazky | ✅ `09_xml_report_zakazka.sql` + záložka *XML* | (D) |
 | – | Record, kolekcie a objekty **v modeli** (všeobecná požiadavka zadania) | ✅ objektový atribút `SERVISNA_POLOZKA_ZAKAZKY.polozka`, VARRAY `VOZIDLO.historia_km`, NESTED TABLE `SERVISNA_ZAKAZKA.kontrolny_zoznam`, `RECORD` v PL/SQL (report 10) | (D) |
-| – | Aktualizovaný ER diagram (finálny model) | ✅ `Autoservis_ERD.png` – 12 tabuliek, kolekcie a objektové typy; model v SQL Developer Data Modeler (`.dmd`) pre obhajobu – pozri *ER diagram* | (D) |
+| – | Aktualizovaný ER diagram (finálny model) | ✅ `Autoservis_ERD_v2.png` – 12 tabuliek, kolekcie a objektové typy; model v SQL Developer Data Modeler (`.dmd`) pre obhajobu – pozri *ER diagram* | (D) |
 | 3 | Základná integrácia s aplikáciou | ✅ Java aplikácia namiesto APEX | (M, D) |
 | – | CRUD operácie (požiadavka cvičiaceho) – všetkých 11 tabuliek | ✅ záložka *Údaje (CRUD)* (pôvodne CRUD len pre zákazníka – M) | (D) |
 | – | GUI (povolené aj desktopové) | ✅ Java Swing | (M, D) |
@@ -212,11 +213,11 @@ z koreňa repozitára). JAR sa do gitu neukladá (`.gitignore`).
 
 ## ER diagram
 
-`Autoservis_ERD.png` je vygenerovaný priamo z dátového slovníka schémy (tabuľky, stĺpce, PK / FK / UNIQUE, NOT NULL,
+Aktuálny diagram `Autoservis_ERD_v2.png` je vygenerovaný priamo z dátového slovníka schémy (tabuľky, stĺpce, PK / FK / UNIQUE, NOT NULL,
 objektové typy a kolekcie), takže zodpovedá skutočnému stavu databázy. Po zmene modelu ho obnovíte:
 
 ```
-java -cp app/target/autoservis-pds.jar tools/ErdGen.java Autoservis_ERD.png
+java -cp app/target/autoservis-pds.jar tools/ErdGen.java Autoservis_ERD_v2.png
 ```
 
 (premenné prostredia `DB_URL`, `DB_USER`, `DB_PASS` s pripojením k schéme).
@@ -232,7 +233,8 @@ Na obhajobu treba model aj v nástroji **SQL Developer Data Modeler** (súbor `.
 ```
 README.md                         dokumentácia projektu                                               (A, M, D)
 .gitignore
-Autoservis_ERD.png                ER diagram                                                          (A, D)
+Autoservis_ERD.png                pôvodný ER diagram                                                  (A)
+Autoservis_ERD_v2.png             aktuálny ER diagram (12 tabuliek, kolekcie, objektové typy)         (D)
 01_schema.sql                     tabuľky (A) + typy a stĺpce s kolekciami (D)                        (A, D)
 02_demo_data.sql                  demo údaje (A) + hodnoty kolekcií (D)                               (A, D)
 02a_migracia_kolekcie.sql         migrácia staršej schémy na kolekcie                                 (D)
